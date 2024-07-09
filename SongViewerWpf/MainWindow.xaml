@@ -4,24 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SongViewerWpf"
+        xmlns:controls="clr-namespace:SongViewerWpf.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Gary's SongViewer" Height="450" Width="800" KeyDown="Window_KeyDown">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"></ColumnDefinition>
-            <ColumnDefinition Width="20*"></ColumnDefinition>
-            <ColumnDefinition Width="20*"></ColumnDefinition>
-            <ColumnDefinition Width="20*"></ColumnDefinition>
-            <ColumnDefinition Width="35*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="5*"></RowDefinition>
-            <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="85*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Button Grid.Column="1" Content="Load" Grid.Row="1"/>
-        <Button Grid.Column="2" Content="Save" Grid.Row="1"/>
-        <Button Grid.Column="3" Content="Play" Grid.Row="1"/>
-        <ListView Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2"></ListView>
+        <TabControl x:Name="MainTab">
+            <TabItem>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="20*"></ColumnDefinition>
+                        <ColumnDefinition Width="20*"></ColumnDefinition>
+                        <ColumnDefinition Width="20*"></ColumnDefinition>
+                        <ColumnDefinition Width="35*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="85*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="LoadBtn" Grid.Column="1" Content="Load" Grid.Row="1" Click="LoadBtn_Click"/>
+                    <Button x:Name="SaveBtn" Grid.Column="2" Content="Save" Grid.Row="1" Click="SaveBtn_Click"/>
+                    <Button x:Name="PlayBtn" Grid.Column="3" Content="Play" Grid.Row="1" Click="PlayBtn_Click"/>
+                    <ListView x:Name="SongList" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Drop="ListView_Drop" AllowDrop="True"></ListView>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <controls:PdfViewer x:Name="PdfViewer"></controls:PdfViewer>
+            </TabItem>
+        </TabControl>
+        
     </Grid>
 </Window>
