@@ -93,7 +93,10 @@ namespace SongViewerWpf.Controls
 
             using (var stream = new InMemoryRandomAccessStream())
             {
-                await page.RenderToStreamAsync(stream);
+                PdfPageRenderOptions renderOptions = new PdfPageRenderOptions();
+                renderOptions.DestinationWidth = 1080;
+                renderOptions.DestinationHeight = 1920;
+                await page.RenderToStreamAsync(stream, renderOptions);
 
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;

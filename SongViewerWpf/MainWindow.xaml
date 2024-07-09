@@ -30,9 +30,29 @@
                 </Grid>
             </TabItem>
             <TabItem>
-                <controls:PdfViewer x:Name="PdfViewer"></controls:PdfViewer>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="95*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*"></RowDefinition>
+                        <RowDefinition Height="50*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <controls:PdfViewer x:Name="PdfViewer" Grid.Column="0" Grid.RowSpan="2"></controls:PdfViewer>
+                    <Button x:Name="PrevBtn" Grid.Column="1" Grid.Row="0" Content="Previous" Width="210" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Click="PrevBtn_Click">
+                        <Button.LayoutTransform>
+                            <RotateTransform CenterX="0" CenterY="0" Angle="90" />
+                        </Button.LayoutTransform>
+                    </Button>
+                    <Button x:Name="NextBtn"  Grid.Column="1" Grid.Row="1" Content="Next" Width="210" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0" Click="NextBtn_Click">
+                        <Button.LayoutTransform>
+                            <RotateTransform CenterX="0" CenterY="0" Angle="90" />
+                        </Button.LayoutTransform>
+                    </Button>
+                </Grid>
             </TabItem>
         </TabControl>
-        
+
     </Grid>
 </Window>

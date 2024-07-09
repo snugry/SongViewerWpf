@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using SongViewerWpf.DataClasses;
+using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -49,6 +50,26 @@ namespace SongViewerWpf
             SongList.Items.Add(newItem);
         }
 
+        private void ChangeSong(int index)
+        {
+            PdfViewer.PdfPath = (string)((ListViewItem)SongList.Items[index]).Tag;
+            PdfViewer.MainScroll.ScrollToRightEnd();
+
+            int prevIndex = index - 1;
+            if(prevIndex < 0)
+            {
+                prevIndex = SongList.Items.Count - 1;
+            }
+            PrevBtn.Content = (string)((ListViewItem)SongList.Items[prevIndex]).Content;
+
+            int nextIndex = index + 1;
+            if (nextIndex >= SongList.Items.Count)
+            {
+                nextIndex = 0;
+            }
+            NextBtn.Content = (string)((ListViewItem)SongList.Items[nextIndex]).Content;
+        }
+
         private void PlayBtn_Click(object sender, RoutedEventArgs e)
         {
             MainTab.SelectedIndex = 1;
@@ -57,14 +78,10 @@ namespace SongViewerWpf
             {
                 if (SongList.SelectedItem != null)
                 {
-                    PdfViewer.PdfPath = (string)((ListViewItem)SongList.SelectedItem).Tag;
                     _songIndex = SongList.SelectedIndex;
                 }
-                else
-                {
-                    PdfViewer.PdfPath = (string)((ListViewItem)SongList.Items[0]).Tag;
-                }
-                PdfViewer.MainScroll.ScrollToRightEnd();
+
+                ChangeSong(_songIndex);
             }
         }
 
@@ -78,8 +95,7 @@ namespace SongViewerWpf
                     _songIndex = 0;
                 }
 
-                PdfViewer.PdfPath = (string)((ListViewItem)SongList.Items[_songIndex]).Tag;
-                PdfViewer.MainScroll.ScrollToRightEnd();
+                ChangeSong(_songIndex);
                 e.Handled = true;
             }
             else if(e.Key == Key.Up)
@@ -91,6 +107,10 @@ namespace SongViewerWpf
             {
                 PdfViewer.MainScroll.ScrollToLeftEnd();
                 e.Handled = true;
+            }
+            else if( e.Key == Key.Escape)
+            {
+                MainTab.SelectedIndex = 0;
             }
         }
 
@@ -146,6 +166,28 @@ namespace SongViewerWpf
                 }
                 _songIndex = 0;
             }
+        }
+
+        private void PrevBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _songIndex--;
+            if (_songIndex < 0)
+            {
+                _songIndex = SongList.Items.Count - 1;
+            }
+
+            ChangeSong(_songIndex);
+        }
+
+        private void NextBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _songIndex++;
+            if (_songIndex >= SongList.Items.Count)
+            {
+                _songIndex = 0;
+            }
+
+            ChangeSong(_songIndex);
         }
     }
 }
