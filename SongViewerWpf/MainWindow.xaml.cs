@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using HidLibrary;
+using Microsoft.Win32;
 using SongViewerWpf.DataClasses;
 using System;
 using System.IO;
@@ -26,6 +27,30 @@ namespace SongViewerWpf
         public MainWindow()
         {
             InitializeComponent();
+            Task.Run(() => MonitorHidDevice());
+        }
+
+        private void MonitorHidDevice()
+        {
+            var devices = HidDevices.Enumerate().ToList();
+            var device = devices.FirstOrDefault(d => d.Description.Contains("FS-1 WL"));
+
+            if (device != null)
+            {
+                device.OpenDevice();
+
+                device.MonitorDeviceEvents = true;
+                device.ReadReport(OnReport);
+
+                device.CloseDevice();
+            }
+        }
+
+        private void OnReport(HidReport report)
+        {
+            var data = report.Data;
+            // Process the HID report data
+            //Dispatcher.Invoke(() => MessageBox.Show($"HID Data: {BitConverter.ToString(data)}"));
         }
 
         private void ListView_Drop(object sender, DragEventArgs e)
@@ -53,7 +78,7 @@ namespace SongViewerWpf
         private void ChangeSong(int index)
         {
             PdfViewer.PdfPath = (string)((ListViewItem)SongList.Items[index]).Tag;
-            PdfViewer.MainScroll.ScrollToRightEnd();
+            PdfViewer.MainScroll.ScrollToLeftEnd();
 
             int prevIndex = index - 1;
             if(prevIndex < 0)
@@ -188,6 +213,11 @@ namespace SongViewerWpf
             }
 
             ChangeSong(_songIndex);
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            Console.WriteLine(e.Key.ToString());
         }
     }
 }

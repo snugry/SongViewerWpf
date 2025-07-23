@@ -11,7 +11,7 @@
         <ItemsControl x:Name="PagesContainer">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft"/>
+                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>

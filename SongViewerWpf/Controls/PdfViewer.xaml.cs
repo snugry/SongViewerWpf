@@ -101,7 +101,7 @@ namespace SongViewerWpf.Controls
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.StreamSource = stream.AsStreamForRead();
-                image.Rotation = Rotation.Rotate90;
+                image.Rotation = Rotation.Rotate270;
                 image.EndInit();
             }
 
