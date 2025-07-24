@@ -6,9 +6,53 @@
         xmlns:local="clr-namespace:SongViewerWpf"
         xmlns:controls="clr-namespace:SongViewerWpf.Controls"
         mc:Ignorable="d"
-        Title="Gary's SongViewer" Height="450" Width="800" KeyDown="Window_KeyDown" PreviewKeyDown="Window_PreviewKeyDown">
+        Title="Gary's SongViewer" Height="450" Width="800" KeyDown="Window_KeyDown" PreviewKeyDown="Window_PreviewKeyDown" Background="#FF444444" Foreground="White">
+    <Window.Resources>
+        <!-- Dark Button Style -->
+        <Style x:Key="ModernDarkButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#2D2D30"/>
+            <Setter Property="BorderBrush" Value="#3F3F46"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4">
+                            <ContentPresenter
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#3E3E42"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#4A4A4F"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#5A5A5F"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#1A1A1D"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#2A2A2D"/>
+                                <Setter Property="Foreground" Value="#777"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <TabControl x:Name="MainTab">
+        <TabControl x:Name="MainTab" Background="#FF444444" Foreground="White">
             <TabItem>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -16,17 +60,19 @@
                         <ColumnDefinition Width="20*"></ColumnDefinition>
                         <ColumnDefinition Width="20*"></ColumnDefinition>
                         <ColumnDefinition Width="20*"></ColumnDefinition>
-                        <ColumnDefinition Width="35*"></ColumnDefinition>
+                        <ColumnDefinition Width="20*"></ColumnDefinition>
+                        <ColumnDefinition Width="15*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="5*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>
-                        <RowDefinition Height="85*"></RowDefinition>
+                        <RowDefinition Height="88*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Button x:Name="LoadBtn" Grid.Column="1" Content="Load" Grid.Row="1" Click="LoadBtn_Click"/>
-                    <Button x:Name="SaveBtn" Grid.Column="2" Content="Save" Grid.Row="1" Click="SaveBtn_Click"/>
-                    <Button x:Name="PlayBtn" Grid.Column="3" Content="Play" Grid.Row="1" Click="PlayBtn_Click"/>
-                    <ListView x:Name="SongList" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Drop="ListView_Drop" AllowDrop="True"></ListView>
+                    <Button Style="{StaticResource ModernDarkButton}" x:Name="LoadBtn" Grid.Column="1" Content="Load" Grid.Row="1" Click="LoadBtn_Click"/>
+                    <Button Style="{StaticResource ModernDarkButton}" x:Name="LoadFolderBtn" Grid.Column="2" Content="Load Folder" Grid.Row="1" Click="LoadFolderBtn_Click"/>
+                    <Button Style="{StaticResource ModernDarkButton}" x:Name="SaveBtn" Grid.Column="3" Content="Save" Grid.Row="1" Click="SaveBtn_Click"/>
+                    <Button Style="{StaticResource ModernDarkButton}" x:Name="PlayBtn" Grid.Column="4" Content="Play" Grid.Row="1" Click="PlayBtn_Click"/>
+                    <ListView x:Name="SongList" Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="2" Drop="ListView_Drop" AllowDrop="True" Background="#FF323232" Foreground="White"></ListView>
                 </Grid>
             </TabItem>
             <TabItem>
@@ -36,16 +82,22 @@
                         <ColumnDefinition Width="95*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50*"></RowDefinition>
-                        <RowDefinition Height="50*"></RowDefinition>
+                        <RowDefinition Height="40*"></RowDefinition>
+                        <RowDefinition Height="20*"></RowDefinition>
+                        <RowDefinition Height="40*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <controls:PdfViewer x:Name="PdfViewer" Grid.Column="1" Grid.RowSpan="2"/>
-                    <Button x:Name="PrevBtn" Grid.Column="0" Grid.Row="1" Content="Previous" Width="210" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Click="PrevBtn_Click">
+                    <controls:PdfViewer x:Name="PdfViewer" Grid.Column="1" Grid.RowSpan="3"/>
+                    <Button Style="{StaticResource ModernDarkButton}" x:Name="PrevBtn" Grid.Column="0" Grid.Row="2" Content="Previous" Width="200" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Click="PrevBtn_Click">
                         <Button.LayoutTransform>
                             <RotateTransform CenterX="0" CenterY="0" Angle="-90" />
                         </Button.LayoutTransform>
                     </Button>
-                    <Button x:Name="NextBtn"  Grid.Column="0" Grid.Row="0" Content="Next" Width="210" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0" Click="NextBtn_Click">
+                    <Button Style="{StaticResource ModernDarkButton}" x:Name="RandBtn" Grid.Column="0" Grid.Row="1" Content="RAND" Width="80" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Click="RandBtn_Click">
+                        <Button.LayoutTransform>
+                            <RotateTransform CenterX="0" CenterY="0" Angle="-90" />
+                        </Button.LayoutTransform>
+                    </Button>
+                    <Button Style="{StaticResource ModernDarkButton}" x:Name="NextBtn"  Grid.Column="0" Grid.Row="0" Content="Next" Width="200" Height="40" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0" Click="NextBtn_Click">
                         <Button.LayoutTransform>
                             <RotateTransform CenterX="0" CenterY="0" Angle="-90" />
                         </Button.LayoutTransform>

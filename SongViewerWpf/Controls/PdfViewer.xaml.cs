@@ -1,28 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Windows.Data.Pdf;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Image = System.Windows.Controls.Image;
 
 namespace SongViewerWpf.Controls
 {
     /// <summary>
     /// Interaktionslogik für PdfViewer.xaml
     /// </summary>
-    public partial class PdfViewer : UserControl
+    public partial class PdfViewer : System.Windows.Controls.UserControl
     {
 
         #region Bindable Properties
@@ -78,7 +67,7 @@ namespace SongViewerWpf.Controls
                     var image = new Image
                     {
                         Source = bitmap,
-                        HorizontalAlignment = HorizontalAlignment.Center,
+                        HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                         Margin = new Thickness(4, 4, 4, 4),
                         MaxWidth = 1920
                     };
